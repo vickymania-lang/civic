@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>details</title>
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/owl.carousel.min.css" rel="stylesheet">
+    <link href="css/owl.theme.default.min.css" rel="stylesheet">
+    <link href="css/templatemo-medic-care.css" rel="stylesheet">
+</head>
+
+<body id="top">
+<main>
+    <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg text-center ">
+        <div class="container">
+            <img class="navbar-brand mx-auto d-lg-none" style="width: 60px; height: auto;" src="images/Engr_Pictures/ui_logo.png" alt="Civic logo" />
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse mx-auto" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item active"><a class="nav-link" href="#hero">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">ABOUT</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#timeline">BLOG POST</a></li>
+                    <a class="navbar-brand d-none d-lg-block" href="index.html">
+                        <img style=" width: 60px; height: auto; " src="images/Engr_Pictures/ui_logo.png" alt="Civic logo" />
+                    </a>
+                    <li class="nav-item"><a class="nav-link" href="#reviews">DEPARTMENT</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#booking">MESSAGE US</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">CONTACT</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section-padding pb-0" id="reviews">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="text-center mb-lg-5 mb-4">Blog Post Details</h2>
+                </div>
+
+                <!-- Display post details -->
+                <div style="margin: 40px; text-align:center;">
+                    <h1 id="entryTitle"></h1>
+                </div>
+                <div style="margin: 40px; text-align: center;">
+                    <p id="entryMessage"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer style="background-color: black;" class="site-footer section-padding" id="contact">
+    <div class="container">
+        <div class="row text-center">
+            <!-- Footer Content -->
+        </div>
+    </div>
+</footer>
+
+<!-- JAVASCRIPT FILES -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/scrollspy.min.js"></script>
+<script src="js/custom.js"></script>
+
+<script>
+    // Get entry ID from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const entryId = urlParams.get("id");
+
+    // Fetch the entry details from the database using the ID
+    async function fetchEntryDetails(id) {
+        try {
+            // Fetch the specific blog post from the PHP API
+            const response = await fetch(`fetch_blog_details.php?id=${id}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch blog details');
+            }
+            const entry = await response.json();
+            if (entry) {
+                // Populate the HTML with the entry details
+                document.getElementById("entryTitle").textContent = entry.heading;
+                document.getElementById("entryMessage").textContent = entry.details;
+            } else {
+                document.getElementById("entryTitle").textContent = "Post not found";
+                document.getElementById("entryMessage").textContent = "The requested post could not be found.";
+            }
+        } catch (error) {
+            console.error("Error fetching blog details:", error);
+            document.getElementById("entryTitle").textContent = "Error";
+            document.getElementById("entryMessage").textContent = "There was an error loading the blog post.";
+        }
+    }
+
+    // Fetch and display the entry details
+    if (entryId) {
+        fetchEntryDetails(entryId);
+    } else {
+        document.getElementById("entryTitle").textContent = "No post ID provided";
+        document.getElementById("entryMessage").textContent = "Please provide a valid blog post ID in the URL.";
+    }
+</script>
+
+</body>
+</html>
