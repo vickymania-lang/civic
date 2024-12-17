@@ -795,6 +795,7 @@ strong {
 
   h3 {
     font-size: 18px;
+
   }
 
   h4 {
@@ -830,7 +831,6 @@ strong {
 
   .heroText {
     position: relative;
-    bottom: 100px;
     left: 0;
     width: auto;
     margin-bottom: -100px;
@@ -846,6 +846,7 @@ strong {
 @media screen and (max-width: 767px) {
   .heroText {
     padding: 1.5rem;
+    display: none;
   }
 
   .animated-info {
@@ -874,9 +875,17 @@ strong {
   }
 }
 
+@media (max-width: 480px) {
+  .container11 > div {
+      width: 100% !important;
+      margin: 5px 0 !important;
+  }
+}
+
 @media screen and (max-width: 480px) {
   .heroText {
     padding: 1rem;
+    display: none;
   }
 
   .heroLinks .custom-link {
